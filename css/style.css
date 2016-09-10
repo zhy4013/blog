@@ -1465,7 +1465,6 @@ a {
 .article-entry .highlight .gutter pre,
 .article-entry .gist .gist-file .gist-data .line-numbers {
   color: #666;
-  font-size: 0.85em;
 }
 .article-entry pre,
 .article-entry code {
@@ -1492,7 +1491,7 @@ a {
   border: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 .article-entry .highlight table {
   margin: 0;
@@ -1501,7 +1500,7 @@ a {
 .article-entry .highlight td {
   border: none;
   padding: 0;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 .article-entry .highlight figcaption {
   font-size: 0.85em;
@@ -1528,8 +1527,8 @@ a {
   text-shadow: none;
 }
 .article-entry .highlight .line {
-  font-size: 15px;
-  height: 15px;
+  font-size: 0.85em;
+  height: 22.400000000000002px;
 }
 .article-entry .gist {
   margin: 0 -20px;
