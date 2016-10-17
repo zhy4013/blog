@@ -4,14 +4,29 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>骇浪至远</title>
+  <title>shiro Cas 单点退出 | 骇浪至远</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="骇浪至远">
-<meta property="og:url" content="https://zhy4013.github.io/blog/index.html">
+  <meta name="description" content="问题描述cas server：casclient server: C1client server: C2
+用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。Shiro的session使用的是DefaultWebSessionManager。
+cas单点退出原理
+问题出在cas server通知C2时，并没有调用subje">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shiro Cas 单点退出">
+<meta property="og:url" content="https://zhy4013.github.io/blog/2016/10/14/shiroCasSingleSignOut/index.html">
 <meta property="og:site_name" content="骇浪至远">
+<meta property="og:description" content="问题描述cas server：casclient server: C1client server: C2
+用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。Shiro的session使用的是DefaultWebSessionManager。
+cas单点退出原理
+问题出在cas server通知C2时，并没有调用subje">
+<meta property="og:image" content="https://zhy4013.github.io/blog/images/casSignOut.png">
+<meta property="og:updated_time" content="2016-10-17T10:55:52.956Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="骇浪至远">
+<meta name="twitter:title" content="shiro Cas 单点退出">
+<meta name="twitter:description" content="问题描述cas server：casclient server: C1client server: C2
+用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。Shiro的session使用的是DefaultWebSessionManager。
+cas单点退出原理
+问题出在cas server通知C2时，并没有调用subje">
+<meta name="twitter:image" content="https://zhy4013.github.io/blog/images/casSignOut.png">
   
     <link rel="alternative" href="/atom.xml" title="骇浪至远" type="application/atom+xml">
   
@@ -196,9 +211,7 @@ var _hmt = _hmt || [];
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-shiroCasSingleSignOut" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-shiroCasSingleSignOut" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/blog/2016/10/14/shiroCasSingleSignOut/" class="article-date">
@@ -214,12 +227,23 @@ var _hmt = _hmt || [];
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2016/10/14/shiroCasSingleSignOut/">shiro Cas 单点退出</a>
+    <h1 class="article-title" itemprop="name">
+      shiro Cas 单点退出
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/cas/">cas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/shiro/">shiro</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -240,20 +264,19 @@ var _hmt = _hmt || [];
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/cas/">cas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/shiro/">shiro</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2016/09/09/单页面iframe跳转/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单页面iframe跳转</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
@@ -262,77 +285,28 @@ var _hmt = _hmt || [];
 
 
 
-
-
-
-  
-    <article id="post-单页面iframe跳转" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/blog/2016/09/09/单页面iframe跳转/" class="article-date">
-  	<time datetime="2016-09-09T12:21:09.000Z" itemprop="datePublished">2016-09-09</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2016/09/09/单页面iframe跳转/">单页面iframe跳转</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>当在页面中嵌入iframe后，跳转iframe的页面时，一般的做法是修改iframe的src。但这样子会出现两个问题：</p>
-<ol>
-<li>刷新页面时，页面会回到最初的页面，而不是当前页面</li>
-<li>iframe缓存问题</li>
-</ol>
-<p>最近看了下网易云音乐的实现方式，发现是通过监听hash的改变来跳转iframe的，改变的是顶层的url地址。这样可以很好的解决刷新问题及缓存问题。</p>
-<p>以下是网易云音乐首页的处理iframe跳转的代码</p>
-<h2 id="Hash-handler"><a href="#Hash-handler" class="headerlink" title="Hash handler"></a>Hash handler</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*!</span></div><div class="line"> * Copyright (c) 2009-2011 Andreas Blixt &lt;andreas@blixt.org&gt;</div><div class="line"> * Contributors: Aaron Ogle &lt;aogle@avencia.com&gt;,</div><div class="line"> * Matti Virkkunen &lt;mvirkkunen@gmail.com&gt;,</div><div class="line"> * Simon Chester &lt;simonches@gmail.com&gt;</div><div class="line"> * http://github.com/blixt/js-hash</div><div class="line"> * MIT License: http://www.opensource.org/licenses/mit-license.php</div><div class="line"> *</div><div class="line"> * Hash handler</div><div class="line"> * Keeps track of the history of changes to the hash part in the address bar.</div><div class="line"> */</div><div class="line"><span class="comment">/* WARNING for Internet Explorer 7 and below:</span></div><div class="line"> * If an element on the page has the same ID as the hash used, the history will</div><div class="line"> * get messed up.</div><div class="line"> *</div><div class="line"> * Does not support history in Safari 2 and below.</div><div class="line"> *</div><div class="line"> * Example:</div><div class="line"> * function handler(newHash, initial) &#123;</div><div class="line"> * if (initial)</div><div class="line"> * alert('Hash is "' + newHash + '"');</div><div class="line"> * else</div><div class="line"> * alert('Hash changed to "' + newHash + '"');</div><div class="line"> * &#125;</div><div class="line"> * Hash.init(handler);</div><div class="line"> * Hash.go('abc123');</div><div class="line"> *</div><div class="line"> *</div><div class="line"> * Updated by Simon Chester (simonches@gmail.com) on 2011-05-16:</div><div class="line"> * - Removed the need for blank.html and the iframe argument by creating the</div><div class="line"> * iframe on initialization.</div><div class="line"> *</div><div class="line"> * Updated by Matti Virkkunen (mvirkkunen@gmail.com) on 2009-11-16:</div><div class="line"> * - Added second argument to callback that indicates whether the callback is</div><div class="line"> * due to initial state (true) or due to an actual change to the hash</div><div class="line"> * (false).</div><div class="line"> *</div><div class="line"> * Updated by Aaron Ogle (aogle@avencia.com) on 2009-08-11:</div><div class="line"> * - Fixed bug where Firefox automatically unescapes location.hash but no</div><div class="line"> * other browsers do. Always get the hash by parsing location.href and</div><div class="line"> * never use location.hash.</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> Hash = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span></div><div class="line"><span class="comment">// Import globals</span></div><div class="line">        <span class="built_in">window</span> = <span class="keyword">this</span>,</div><div class="line">        documentMode = <span class="built_in">document</span>.documentMode,</div><div class="line">        history = <span class="built_in">window</span>.history,</div><div class="line"><span class="comment">// Plugin variables</span></div><div class="line">        callback, hash,</div><div class="line"><span class="comment">// IE-specific</span></div><div class="line">        iframe,</div><div class="line">        getHash = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"><span class="comment">// Internet Explorer 6 (and possibly other browsers) extracts the query</span></div><div class="line"><span class="comment">// string out of the location.hash property into the location.search</span></div><div class="line"><span class="comment">// property, so we can't rely on it. The location.search property can't be</span></div><div class="line"><span class="comment">// relied on either, since if the URL contains a real query string, that's</span></div><div class="line"><span class="comment">// what it will be set to. The only way to get the whole hash is to parse</span></div><div class="line"><span class="comment">// it from the location.href property.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// Another thing to note is that in Internet Explorer 6 and 7 (and possibly</span></div><div class="line"><span class="comment">// other browsers), subsequent hashes are removed from the location.href</span></div><div class="line"><span class="comment">// (and location.hash) property if the location.search property is set.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// Via Aaron: Firefox 3.5 (and below?) always unescape location.hash which</span></div><div class="line"><span class="comment">// causes poll to fire the hashchange event twice on escaped hashes. This</span></div><div class="line"><span class="comment">// is because the hash variable (escaped) will not match location.hash</span></div><div class="line"><span class="comment">// (unescaped.) The only consistent option is to rely completely on</span></div><div class="line"><span class="comment">// location.href.</span></div><div class="line">            <span class="keyword">var</span> index = <span class="built_in">window</span>.location.href.indexOf(<span class="string">'#'</span>);</div><div class="line">            <span class="keyword">return</span> (index == <span class="number">-1</span> ? <span class="string">''</span> : <span class="built_in">window</span>.location.href.substr(index + <span class="number">1</span>));</div><div class="line">        &#125;,</div><div class="line"><span class="comment">// Used by all browsers except Internet Explorer 7 and below.</span></div><div class="line">        poll = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> curHash = getHash();</div><div class="line">            <span class="keyword">if</span> (curHash != hash) &#123;</div><div class="line">                hash = curHash;</div><div class="line">                callback(curHash, <span class="literal">false</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line"><span class="comment">// From:</span></div><div class="line"><span class="comment">// http://perfectionkills.com/detecting-event-support-without-browser-sniffing/</span></div><div class="line">        isHashChangeSupported = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> eventName = <span class="string">'onhashchange'</span>;</div><div class="line">            <span class="keyword">var</span> isSupported = (eventName <span class="keyword">in</span> <span class="built_in">document</span>.body);</div><div class="line">            <span class="keyword">if</span> (!isSupported) &#123;</div><div class="line">                <span class="built_in">document</span>.body.setAttribute(eventName, <span class="string">'return;'</span>);</div><div class="line">                isSupported = <span class="keyword">typeof</span> <span class="built_in">document</span>.body[eventName] == <span class="string">'function'</span>;</div><div class="line">            &#125;</div><div class="line"><span class="comment">// documentMode logic from YUI to filter out IE8 Compat Mode (which</span></div><div class="line"><span class="comment">// generates false positives).</span></div><div class="line">            <span class="keyword">return</span> isSupported &amp;&amp; (<span class="built_in">document</span>.documentMode === <span class="literal">undefined</span> ||</div><div class="line">                <span class="built_in">document</span>.documentMode &gt; <span class="number">7</span>);</div><div class="line">        &#125;,</div><div class="line">        createIframe = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> tempEl = <span class="built_in">document</span>.createElement();</div><div class="line">            tempEl.innerHTML = <span class="string">'&lt;iframe src="javascript:void(0)" tabindex="-1" '</span> +</div><div class="line">                <span class="string">'style="display: none;"&gt;&lt;/iframe&gt;'</span>;</div><div class="line">            <span class="keyword">var</span> frame = tempEl.childNodes[<span class="number">0</span>];</div><div class="line">            <span class="built_in">document</span>.body.appendChild(frame);</div><div class="line">            <span class="keyword">return</span> frame;</div><div class="line">        &#125;,</div><div class="line"><span class="comment">// Used to create a history entry with a value in the iframe.</span></div><div class="line">        setIframe = <span class="function"><span class="keyword">function</span> (<span class="params">newHash</span>) </span>&#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">var</span> doc = iframe.contentWindow.document;</div><div class="line">                doc.open();</div><div class="line">                doc.write(<span class="string">'&lt;html&gt;&lt;body&gt;'</span> + newHash + <span class="string">'&lt;/body&gt;&lt;/html&gt;'</span>);</div><div class="line">                doc.close();</div><div class="line">                hash = newHash;</div><div class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">                setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                    setIframe(newHash);</div><div class="line">                &#125;, <span class="number">10</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line"><span class="comment">// Used by Internet Explorer 7 and below to set up an iframe that keeps track</span></div><div class="line"><span class="comment">// of history changes.</span></div><div class="line">        setUpIframe = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"><span class="comment">// Don't run until access to the body is allowed.</span></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                iframe = createIframe();</div><div class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">                setTimeout(setUpIframe, <span class="number">10</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line"><span class="comment">// Create a history entry for the initial state.</span></div><div class="line">            setIframe(hash);</div><div class="line">            <span class="keyword">var</span> data = hash;</div><div class="line">            setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                <span class="keyword">var</span> curData, curHash;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    curData = iframe.contentWindow.document.body.innerText;</div><div class="line">                    <span class="keyword">if</span> (curData != data) &#123;</div><div class="line">                        data = curData;</div><div class="line">                        <span class="built_in">window</span>.location.hash = hash = curData;</div><div class="line">                        callback(curData, <span class="literal">true</span>);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        curHash = getHash();</div><div class="line">                        <span class="keyword">if</span> (curHash != hash) setIframe(curHash);</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">                &#125;</div><div class="line">            &#125;, <span class="number">50</span>);</div><div class="line">        &#125;;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        init: <span class="function"><span class="keyword">function</span> (<span class="params">cb</span>) </span>&#123;</div><div class="line"><span class="comment">// init can only be called once.</span></div><div class="line">            <span class="keyword">if</span> (callback) <span class="keyword">return</span>;</div><div class="line">            callback = cb;</div><div class="line"><span class="comment">// Keep track of the hash value.</span></div><div class="line">            hash = getHash();</div><div class="line">            cb(hash, <span class="literal">true</span>);</div><div class="line">            <span class="keyword">if</span> (isHashChangeSupported()) &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="built_in">window</span>.addEventListener) &#123;</div><div class="line">                    <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, poll, <span class="literal">false</span>);</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.attachEvent) &#123;</div><div class="line">                    <span class="built_in">window</span>.attachEvent(<span class="string">'onhashchange'</span>, poll);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="comment">// Run specific code for Internet Explorer.</span></div><div class="line">                <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject) &#123;</div><div class="line">                    <span class="keyword">if</span> (!documentMode || documentMode &lt; <span class="number">8</span>) &#123;</div><div class="line"><span class="comment">// Internet Explorer 5.5/6/7 need an iframe for history</span></div><div class="line"><span class="comment">// support.</span></div><div class="line">                        setUpIframe();</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="comment">// Change Opera navigation mode to improve history support.</span></div><div class="line">                    <span class="keyword">if</span> (history.navigationMode) &#123;</div><div class="line">                        history.navigationMode = <span class="string">'compatible'</span>;</div><div class="line">                    &#125;</div><div class="line">                    setInterval(poll, <span class="number">50</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        go: <span class="function"><span class="keyword">function</span> (<span class="params">newHash</span>) </span>&#123;</div><div class="line"><span class="comment">// Cancel if the new hash is the same as the current one, since there</span></div><div class="line"><span class="comment">// is no cross-browser way to keep track of navigation to the exact</span></div><div class="line"><span class="comment">// same hash multiple times in a row. A wrapper can handle this by</span></div><div class="line"><span class="comment">// adding an incrementing counter to the end of the hash.</span></div><div class="line">            <span class="keyword">if</span> (newHash == hash) <span class="keyword">return</span>;</div><div class="line">            <span class="keyword">if</span> (iframe) &#123;</div><div class="line">                setIframe(newHash);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="built_in">window</span>.location.hash = hash = newHash;</div><div class="line">                callback(newHash, <span class="literal">false</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;)();</div><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> _lastPage = <span class="string">''</span>,</div><div class="line">        _igReg = <span class="regexp">/f=(.*?)/</span>,</div><div class="line">        _hReg = <span class="regexp">/\/?#.*/</span>,</div><div class="line">        _xssReg = <span class="regexp">/(java|vb)script/</span>,<span class="comment">//xss注入</span></div><div class="line">        _default = <span class="string">'/'</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">_isIE10plus</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> _ua = <span class="built_in">window</span>.navigator.userAgent;</div><div class="line">        <span class="keyword">return</span> (<span class="regexp">/msie\s+(.*?);/i</span>.test(_ua) || <span class="regexp">/trident\/.+rv:([\d\.]+)/i</span>.test(_ua)) &amp;&amp; (<span class="built_in">parseInt</span>(<span class="built_in">RegExp</span>.$<span class="number">1</span>) &gt;= <span class="number">10</span>);</div><div class="line">    &#125;;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">_onHashChange</span>(<span class="params">_hash</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> _url,</div><div class="line">            _iframe = <span class="built_in">document</span>.getElementById(<span class="string">'mainIframe'</span>);</div><div class="line">        _iframe.height = <span class="number">200</span>;</div><div class="line">        <span class="keyword">if</span> (!_hash || _igReg.test(_hash) || _xssReg.test(_hash)) &#123;<span class="comment">//忽略统计来源的hash</span></div><div class="line">            _url = _default;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            _hash = _hash.replace(<span class="regexp">/\/+/g</span>, <span class="string">'/'</span>);</div><div class="line">            <span class="keyword">var</span> _midx = <span class="number">-1</span>;</div><div class="line">            <span class="keyword">if</span> ((_midx = _hash.indexOf(<span class="string">'store/m/'</span>)) &gt;= <span class="number">0</span>) &#123;</div><div class="line">                _url = _hash.substring(<span class="number">0</span>, _midx + <span class="number">8</span>) + (_hash.substring(_midx + <span class="number">8</span>).replace(<span class="string">'/m/'</span>, <span class="string">'/#/'</span>));</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                _url = _hash.replace(<span class="string">'/m/'</span>, <span class="string">'/#/'</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (_url.indexOf(<span class="string">'http://'</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">	    url = location.protocol+<span class="string">'//'</span>+location.hostname+_url;</div><div class="line">        &#125;</div><div class="line"><span class="comment">//针对ie10+ location.replace的bug做特殊处理</span></div><div class="line">        <span class="keyword">if</span> (_isIE10plus()) &#123;</div><div class="line">            <span class="keyword">if</span> (_lastPage.replace(_hReg, <span class="string">''</span>) == _url.replace(_hReg, <span class="string">''</span>)) &#123;<span class="comment">//只是hash的改变</span></div><div class="line">                _iframe.contentWindow.location.replace(_url);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                _iframe.parentNode.removeChild(_iframe);</div><div class="line">                _iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</div><div class="line">                _iframe.id = <span class="string">'g_iframe'</span>;</div><div class="line">                _iframe.src = <span class="string">'about:blank'</span>;</div><div class="line">                _iframe.className = <span class="string">'g-iframe'</span>;</div><div class="line">                <span class="built_in">document</span>.body.insertAdjacentElement(<span class="string">'afterBegin'</span>, _iframe);</div><div class="line">                _iframe.contentWindow.location.href = _url;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            _iframe.contentWindow.location.replace(_url);</div><div class="line">        &#125;</div><div class="line">        _lastPage = _url;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">window</span>.onHashChange == <span class="string">'function'</span>) &#123;</div><div class="line">            <span class="built_in">window</span>.onHashChange(_hash);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    Hash.init(_onHashChange);</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        dispatch: <span class="function"><span class="keyword">function</span> (<span class="params">_url, _replace</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> _ph = GUtil.getPathAndHash(_url);</div><div class="line">            <span class="keyword">if</span> (!_ph) <span class="keyword">return</span>;</div><div class="line">            <span class="keyword">if</span> (_replace) &#123;</div><div class="line">                location.replace(GUtil.getBase() + <span class="string">'#'</span> + _ph);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                location.hash = _ph;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        refreshIFrame: <span class="function"><span class="keyword">function</span> (<span class="params">_url</span>) </span>&#123;</div><div class="line">            _onHashChange(_url);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
-<p>iframe页面中，需要实现对所有链接的拦截，拦截后修改最外层的url，将iframe中链接的url添加到浏览器url后面，这样就会触发hashchange事件处理iframe的跳转。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> $target = $(e.currentTarget);</div><div class="line"></div><div class="line">    e.preventDefault();</div><div class="line"></div><div class="line">    <span class="keyword">var</span> url = $target.attr(<span class="string">'href'</span>);</div><div class="line">    <span class="keyword">if</span> (!url || url === <span class="string">'#'</span> || url.indexOf(<span class="string">'javascript:void'</span>) &gt; <span class="number">-1</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    top.window.location.href = <span class="string">'#'</span> + url;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/web/">web</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="shiroCasSingleSignOut" data-title="shiro Cas 单点退出" data-url="https://zhy4013.github.io/blog/blog/2016/10/14/shiroCasSingleSignOut/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"zhy4013"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
 
-
-
-
-
-
-  
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -356,8 +330,8 @@ var _hmt = _hmt || [];
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
