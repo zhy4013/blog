@@ -9,7 +9,8 @@
   <meta name="description" content="问题描述cas server：casclient server: C1client server: C2
 用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。Shiro的session使用的是DefaultWebSessionManager。
 cas单点退出原理
-问题出在cas server通知C2时，并没有调用subje">
+
+问题出在cas server通知C2时，并没有调用subj">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shiro Cas 单点退出">
 <meta property="og:url" content="https://zhy4013.github.io/blog/2016/10/14/shiroCasSingleSignOut/index.html">
@@ -17,15 +18,17 @@ cas单点退出原理
 <meta property="og:description" content="问题描述cas server：casclient server: C1client server: C2
 用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。Shiro的session使用的是DefaultWebSessionManager。
 cas单点退出原理
-问题出在cas server通知C2时，并没有调用subje">
+
+问题出在cas server通知C2时，并没有调用subj">
 <meta property="og:image" content="https://zhy4013.github.io/blog/../images/casSignOut.png">
-<meta property="og:updated_time" content="2016-10-17T11:03:08.628Z">
+<meta property="og:updated_time" content="2016-10-17T11:09:02.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shiro Cas 单点退出">
 <meta name="twitter:description" content="问题描述cas server：casclient server: C1client server: C2
 用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。Shiro的session使用的是DefaultWebSessionManager。
 cas单点退出原理
-问题出在cas server通知C2时，并没有调用subje">
+
+问题出在cas server通知C2时，并没有调用subj">
 <meta name="twitter:image" content="https://zhy4013.github.io/blog/../images/casSignOut.png">
   
     <link rel="alternative" href="/atom.xml" title="骇浪至远" type="application/atom+xml">
@@ -250,7 +253,8 @@ var _hmt = _hmt || [];
       
         <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>cas server：cas<br>client server: C1<br>client server: C2</p>
 <p>用户登录客户端C1和C2后，当C1退出登录后，客户端C2并没有退出，shiro管理的session并没有销毁，C2还并没有退出。<br>Shiro的session使用的是DefaultWebSessionManager。</p>
-<h2 id="cas单点退出原理"><a href="#cas单点退出原理" class="headerlink" title="cas单点退出原理"></a>cas单点退出原理</h2><p><img src="../images/casSignOut.png" alt=""></p>
+<h2 id="cas单点退出原理"><a href="#cas单点退出原理" class="headerlink" title="cas单点退出原理"></a>cas单点退出原理</h2>
+<p><img src="../images/casSignOut.png" alt=""></p>
 <p>问题出在cas server通知C2时，并没有调用subject.logout进行退出操作。</p>
 <h1 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h1><p>知道了在接收到cas server的通知后没有做退出的操作，那么解决思路也就比较清楚，就是在接收到cas server的通知后进行退出操作。但是因为cas server通知C2是通过http client请求C2的<a href="http://c2_host/cas" target="_blank" rel="external">http://c2_host/cas</a> 地址，这样子就无法获取当前登录用户的session，那么就还需要维护ticket与session的映射。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>1.继承CasFilter过滤器，重新实现onAccessDenied方法和onLoginSuccess方法<br>2.在onAccessDenied方法中判断请求，如果是CAS back channel logout request，则将用户退出系统。<br>3.在onAccessDenied方法中判断请求，如果是登录请求，执行executeLogin进行登录。<br>4.在onLoginSuccess方法中记录ticket和sessionID的映射。</p>
