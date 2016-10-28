@@ -124,7 +124,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/blog/tags/cas/" style="font-size: 10px;">cas</a> <a href="/blog/tags/shiro/" style="font-size: 10px;">shiro</a> <a href="/blog/tags/web/" style="font-size: 10px;">web</a>
+						<a href="/blog/tags/cas/" style="font-size: 10px;">cas</a> <a href="/blog/tags/shiro/" style="font-size: 10px;">shiro</a> <a href="/blog/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/blog/tags/web/" style="font-size: 10px;">web</a>
 					</div>
 				</section>
 				
@@ -197,6 +197,101 @@ var _hmt = _hmt || [];
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-startssl-tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/blog/2016/10/26/startssl-tomcat/" class="article-date">
+  	<time datetime="2016-10-26T09:07:51.000Z" itemprop="datePublished">2016-10-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2016/10/26/startssl-tomcat/">Tomcat配置StartSSL免费SSL证书</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="注册StartSSL账户"><a href="#注册StartSSL账户" class="headerlink" title="注册StartSSL账户"></a>注册StartSSL账户</h1><p>官网：<a href="https://www.startssl.com/" target="_blank" rel="external">https://www.startssl.com/</a><br>注册账号、域名绑定。这两步比较简单，按照网上的提示操作即可。</p>
+<h1 id="生成keystore"><a href="#生成keystore" class="headerlink" title="生成keystore"></a>生成keystore</h1><p>到你部署tomcat的服务器上生成keystore。<br>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -genkey -alias cas -keyalg RSA -keystore cas.keystore -keysize 2048</div></pre></td></tr></table></figure></p>
+<p><img src="/blog/image/ssl-genkey.png" alt=""></p>
+<p><strong>注意：</strong> What is your first and last name? 必须填写为域名。</p>
+<p>执行完后，会在当前目录生成cas.keystore文件，需要记住刚才设定的密码，后面会用。</p>
+<h1 id="生成csr"><a href="#生成csr" class="headerlink" title="生成csr"></a>生成csr</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -certreq -alias cas -file cas.csr -keystore cas.keystore</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>cas</strong>:别名<br><strong>cas.csr</strong>:要生成的csr文件<br><strong>cas.keystore</strong>:之前生成的keystore</p>
+</blockquote>
+<h1 id="在StartSSL上提交CSR文件"><a href="#在StartSSL上提交CSR文件" class="headerlink" title="在StartSSL上提交CSR文件"></a>在StartSSL上提交CSR文件</h1><p>用文本编辑器打开刚生成的cas.csr文件，将其提交到StartSSL，然后生成证书并下载。</p>
+<h1 id="安装SSL证书"><a href="#安装SSL证书" class="headerlink" title="安装SSL证书"></a>安装SSL证书</h1><p>从StartSSL下载生成的证书并解压，再解压里面的OtherServer压缩包。解压后会得到3个证书文件：</p>
+<ul>
+<li>root.crt</li>
+<li>1_Intermediate.crt</li>
+<li>2_cas.*.com.crt</li>
+</ul>
+<p>将这三个文件放到tomcat服务器上，导入root CA, intermediate CA和public certificate到keystore。<br>命令：<br>keytool -import -trustcacerts -alias <strong>alias_name</strong> -file <strong>xxx.crt</strong> -keystore <strong>keystore_name</strong></p>
+<ol>
+<li>导入root CA</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -import -trustcacerts -alias root -file crt/root.crt -keystore cas.keystore</div></pre></td></tr></table></figure>
+<ol>
+<li>导入intermediate CA</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -import -trustcacerts -alias intermediate -file crt/1_Intermediate.crt -keystore cas.keystore</div></pre></td></tr></table></figure>
+<ol>
+<li>导入public certificate</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -import -trustcacerts -alias casdev -file crt/2_cas.*.com.crt -keystore cas.keystore</div></pre></td></tr></table></figure>
+<h1 id="tomcat部署SSL证书"><a href="#tomcat部署SSL证书" class="headerlink" title="tomcat部署SSL证书"></a>tomcat部署SSL证书</h1><p>编辑server.xml，配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"443"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span> <span class="attr">SSLEnabled</span>=<span class="string">"true"</span> <span class="attr">maxThreads</span>=<span class="string">"150"</span></span></div><div class="line"><span class="attr">scheme</span>=<span class="string">"https"</span> <span class="attr">secure</span>=<span class="string">"true"</span> <span class="attr">clientAuth</span>=<span class="string">"false"</span> <span class="attr">sslProtocol</span>=<span class="string">"TLS"</span></div><div class="line"><span class="attr">keystoreFile</span>=<span class="string">"path/cas.keystore"</span> <span class="attr">keystorePass</span>=<span class="string">"password"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>keystorePass就是生成keystore时设置的密码。</p>
+<p>至此，服务端的SSL证书配置已完成。不需要客户端验证证书的忽略以下内容。</p>
+<h1 id="客户端导入证书"><a href="#客户端导入证书" class="headerlink" title="客户端导入证书"></a>客户端导入证书</h1><p>在服务端导出客户端什么的证书（公钥）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -export -alias cas -file cas.cer -keystore cas.keystore</div></pre></td></tr></table></figure>
+<p>因为客户端需要使用该证书进行验证，需要将证书导入到JDK中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd $JAVA_HOME/jre/lib/security</div><div class="line"></div><div class="line">keytool -import -alias casdev -file /path/cas.cer -noprompt -trustcacerts -storetype jks -keystore cacerts -storepass changeit</div></pre></td></tr></table></figure>
+<p>jdk的cacerts证书库默认密码是：changeit</p>
+<p>完…</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ssl/">ssl</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-shiroCasSingleSignOut" class="article article-type-post" itemscope itemprop="blogPost">
   
